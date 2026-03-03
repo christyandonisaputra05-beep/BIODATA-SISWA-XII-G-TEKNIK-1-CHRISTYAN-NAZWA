@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Siswa XII-G / TEKNIK 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .not-found {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>BIODATA SISWA<br>XII-G / TEKNIK 1 <br> CHRISTYAN & NAZWA</h1>
+
+<input type="text" id="searchInput" placeholder="Ketik Nama Siswa..." onkeyup="cariSiswa()">
+
+<div id="hasil"></div>
+
+<script>
+const siswa = [
+{nama:"Alessandro Rafael Ferdiyanto", ttl:"Jakarta, 12-01-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Alexander Karyadi ", ttl:"Bandung, 03-02-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Alfi Quaresma Aguero", ttl:"Tarakan, 24-03-2007", agama:"Islam", jk:"Laki-laki"},
+{nama:"Anastasya Permata Sari", ttl:"Semarang, 21-04-2008", agama:"Buddha", jk:"Perempuan"},
+{nama:"Cahaya Nur Aliyya", ttl:"Denpasar, 11-05-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Christyan Doni Saputra", ttl:"Tarakan, 05-12-2007", agama:"Katolik", jk:"Laki-laki"},
+{nama:"Delbert Noah Darmawan", ttl:"Medan, 17-07-2007", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Edelwin Suviryananda Yovandra", ttl:"Palembang, 25-08-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Ervan Kurniawan", ttl:"Palembang, 25-08-2008", agama:"Buddha", jk:"Laki-laki"},
+{nama:"Farel Faidil Mili", ttl:"Tarakan, 26-02-2008", agama:"Islam", jk:"Laki-laki"},
+{nama:"Farizha Aqila", ttl:"Tarakan, 29-05-2008", agama:"Islam", jk:"Perempuan"},
+{nama:"Fathir Rezky Anandaputra", ttl:"Manado, 19-11-2007", agama:"Islam", jk:"Laki-laki"},
+{nama:"Felicia Selistio", ttl:"Malang, 05-12-2008", agama:"Kristen", jk:"Perempuan"},
+{nama:"Fitri Nurfaizah Chairani", ttl:"Tarakan, 14-10-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Jason Leonard Hadiputra", ttl:"Padang, 18-02-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Jennifer Jacquelin Tan", ttl:"Pontianak, 07-03-2007", agama:"Kristen", jk:"Perempuan"},
+{nama:"Jenson Hernando", ttl:"Kupang, 12-10-2007", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Jessica Amelia Tandyo", ttl:"Tarakan, 12-08-2008", agama:"Kristen", jk:"Perempuan"},
+{nama:"Jordan Thiery Kurniawan", ttl:"Cirebon, 16-06-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Keylin Chandra", ttl:"Tarakan, 30-06-2008", agama:"Buddha", jk:"Perempuan"},
+{nama:"Khaedar Anas", ttl:"Tarakan, 02-06-2008", agama:"Islam", jk:"Laki-laki"},
+{nama:"Lois Marcello", ttl:"Tarakan, 24-02-2007", agama:"Buddha", jk:"Laki-laki"},
+{nama:"Marciano Liputra", ttl:"Batam, 14-10-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Melinda Odelia Xie", ttl:"Makassar, 27-11-2007", agama:"Buddha", jk:"Perempuan"},
+{nama:"Muhammad Radeffa Putra Irawan", ttl:"Mataram, 08-12-2008", agama:"Islam", jk:"Laki-laki"},
+{nama:"Nailah Alya Ramadhani", ttl:"Pekanbaru, 10-01-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Nazwa Islamy Ramadhani", ttl:"Tarakan, 15-09-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Nurlintang Aurellia An Nashifah", ttl:"Tarakan, 17-09-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Radisya Ariyandika Maulana", ttl:"Tasikmalaya, 03-04-2008", agama:"Islam", jk:"Laki-laki"},
+{nama:"Rafa Adhitya Darmanto", ttl:"Jambi, 14-05-2007", agama:"Islam", jk:"Laki-laki"},
+{nama:"Rara Cinta Julinar", ttl:"Samarinda, 27-06-2008", agama:"Islam", jk:"Perempuan"},
+{nama:"Regita Octavia Palebangan", ttl:"Mataram, 31-10-2007", agama:"Kristen", jk:"Perempuan"},
+{nama:"Ridwan", ttl:"Tarakan, 30-05-2008", agama:"Islam", jk:"Laki-laki"},
+{nama:"Steven Edwards", ttl:"Purwokerto, 02-09-2007", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Vincent Louis Kang", ttl:"Magelang, 19-10-2008", agama:"Kristen", jk:"Laki-laki"},
+{nama:"Violita Erlani Putri", ttl:"Cilegon, 06-11-2007", agama:"Islam", jk:"Perempuan"},
+{nama:"Yandri Tonapa", ttl:"Lombok, 22-01-2008", agama:"Kristen", jk:"Laki-laki"}
+];
+
+function cariSiswa() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const hasil = document.getElementById("hasil");
+    hasil.innerHTML = "";
+
+    const ditemukan = siswa.filter(s => s.nama.toLowerCase().includes(input));
+
+    if (ditemukan.length > 0 && input !== "") {
+        ditemukan.forEach(s => {
+            hasil.innerHTML += `
+                <div class="card">
+                    <h3>${s.nama}</h3>
+                    <p><b>Tempat, Tanggal Lahir:</b> ${s.ttl}</p>
+                    <p><b>Agama:</b> ${s.agama}</p>
+                    <p><b>Jenis Kelamin:</b> ${s.jk}</p>
+                </div>
+            `;
+        });
+    } else if (input !== "") {
+        hasil.innerHTML = "<p class='not-found'>Data tidak ditemukan</p>";
+    }
+}
+</script>
+
+</body>
+</html>
